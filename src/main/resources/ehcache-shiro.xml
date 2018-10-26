@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="shiroCache">
+
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false" />/对象是否永久有效，一但设置了，timeout将不起作用
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="false"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+    />
+
+    <!-- 权限cache，默认命名shiro.authorizationCache -->
+    <cache name="shiro.authorizationCache"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToLiveSeconds="120"
+           overflowToDisk="false" />
+
+    <!-- 登录记录缓存 锁定10分钟 -->
+    <cache name="lgoinRetryCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="300"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+</ehcache>
