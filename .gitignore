@@ -25,6 +25,5 @@
 /.nb-gradle/
 mvnw
 *.cmd
-*.properties
 *.jar
 /log/*.log
