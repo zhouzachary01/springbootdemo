@@ -2,7 +2,7 @@ package com.demo.filter;
 
 import com.demo.service.UserService;
 import com.demo.service.impl.UserServiceImpl;
-import org.apache.shiro.SecurityUtils;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -20,7 +20,8 @@ import java.net.InetAddress;
  * @comment: 备注
  * @version: V1.0
  */
-@WebFilter(urlPatterns = "", filterName = "myfilter")
+@Configuration
+@WebFilter(urlPatterns = "/")
 //@Order(Integer.MAX_VALUE -1)
 public class MyFilter implements Filter {
 
@@ -37,7 +38,6 @@ public class MyFilter implements Filter {
             userService = wct.getBean(UserServiceImpl.class);//获取bean；
         }
         System.out.println("Filter初始化中");
-
     }
 
     @Override
@@ -50,19 +50,20 @@ public class MyFilter implements Filter {
         String servletPath = req.getServletPath();//请求路径；
         String contextPath = req.getContextPath();
 
+        String canshu = req.getQueryString();//获取的url后面的参数
+
         if(servletPath.matches(".*(\\.([a-z]|[A-Z])+)$")){
             filterChain.doFilter(servletRequest, servletResponse);
         }else if(servletPath.contains("/login") || servletPath.contains("/admin")){
             filterChain.doFilter(servletRequest, servletResponse);
         }else{
-            String user  = (String)SecurityUtils.getSubject().getPrincipal();
+            /*Object user  = SecurityUtils.getSubject().getPrincipal();
             if(user == null){//获取不到用户信息，则重定向到登录页面；
-                res.sendRedirect("/admin");
-            }else{
+                res.sendRedirect(contextPath + "/admin");
+            }else{*/
                 filterChain.doFilter(servletRequest, servletResponse);
-            }
+           /* }*/
         }
-        //filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

@@ -15,12 +15,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.Map;
 
@@ -59,56 +55,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    @ResponseBody
-    public ResultMap login(@RequestParam Map<String,Object> params,HttpServletRequest request){
-
-        StringBuilder buffer = new StringBuilder();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(request.getInputStream(),"UTF-8"));
-            String i = null;
-            while((i = reader.readLine()) != null){
-                buffer.append(i);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally{
-            if(reader != null){
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        System.out.println(buffer.toString());
-
-       /* InputStream is = null;
-        InputStreamReader isr = null;
-
-        StringBuffer str = new StringBuffer();
-        String string = "";
-        try {
-            is = request.getInputStream();
-            isr = new InputStreamReader(is, "UTF-8");
-            BufferedInputStream in = new BufferedInputStream(is);
-            int i;
-            char c;
-            while ((i=in.read())!=-1) {
-                c=(char)i;
-                str.append(c);
-            }
-            string = URLDecoder.decode(str.toString(), "UTF-8");
-            System.out.println(string);
-            string = new String(URLEncoder.encode(str.toString(),"UTF-8"));
-            string = new String(str.toString().getBytes("UTF-8"),"UTF-8");
-            string = URLEncoder.encode(string, "UTF-8");
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }*/
-
-
-
+    public String login(@RequestParam Map<String,Object> params,HttpServletRequest request){
 
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -178,7 +125,7 @@ public class UserController {
 
         Object obj = currentUser.getPrincipal();
 
-        return result;
+        return "index/index";
     }
 
     @RequestMapping(value = "/getUsers",method = RequestMethod.GET)

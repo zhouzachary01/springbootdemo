@@ -1,7 +1,5 @@
 package com.demo.exception;
 
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
 /**
  * @description: 一句话描述功能;
  * @author: 周海涛
@@ -10,9 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @version: V1.0
  */
 //@ControllerAdvice
+//@ResponseBody
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
+    //@ExceptionHandler(RuntimeException.class)
     //如果返回json，需要@ResponseBody注解；如果返回页面，则不需要
     public String resultError(){
 

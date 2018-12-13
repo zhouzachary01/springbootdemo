@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,13 +19,15 @@ import java.util.List;
  * @version: V1.0
  */
 @Service
-//@Transactional
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userdao;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+
 
     @Override
     public List<User> getUsers() {
@@ -67,5 +70,15 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
+    }
+
+    @Override
+    public void test1() {
+        try{
+            userdao.test1();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

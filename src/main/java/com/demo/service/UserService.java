@@ -18,4 +18,6 @@ public interface UserService {
     User getUserByLoginName(String loginName);
 
     public void insertUser(User user);
+
+    public void test1();
 }

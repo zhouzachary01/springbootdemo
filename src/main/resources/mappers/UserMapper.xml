@@ -13,6 +13,13 @@
     id, login_name, name, pass,disabled,fails
   </sql>
 
+  <update id="test1">
+      delete from user where id = '1';
+      update user set login_name = null;
+  </update>
+
+
+
   <select id="selectByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

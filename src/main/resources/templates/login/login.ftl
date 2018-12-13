@@ -50,7 +50,7 @@
 <script src="js/layui.js" charset="utf-8"></script>
 <script>
 	//		var surl = init();
-	var surl = "http://127.0.0.1:8087/login";
+	var surl = "http://127.0.0.1:8080/login";
 	// 登陆调用接口
 	function getLogin(){
 		var userNum = document.getElementById('phone').value;
@@ -74,11 +74,10 @@
                         type: "GET"
                     })*/
 				}
-//
 
 		    },  
 		    error: function (returndata) { 
-		       	alert("请求失败")
+		       	alert("请求失败111")
 		    } 
 	 	});
 	}

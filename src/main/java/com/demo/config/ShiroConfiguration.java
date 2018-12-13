@@ -6,8 +6,10 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,6 +41,9 @@ public class ShiroConfiguration {
     }
 
     /**
+     * spring整合shiro出现UnavailableSecurityManagerException在网上查出的问题都是没有配置DelegatingFilterProxy,
+     * 或者DelegatingFilterProxy的配置顺序错了，对应的解决办法就是在web.xml上添加DelegatingFilterProxy。
+     *
      * 注册DelegatingFilterProxy（Shiro）
      * 集成Shiro有2种方法：
      * 1. 按这个方法自己组装一个FilterRegistrationBean（这种方法更为灵活，可以自己定义UrlPattern，
@@ -50,16 +55,16 @@ public class ShiroConfiguration {
      * @author SHANHY
      * @create  2016年1月13日
      */
-//  @Bean
-//  public FilterRegistrationBean filterRegistrationBean() {
-//      FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
-//      filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-//      //  该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
-//      filterRegistration.addInitParameter("targetFilterLifecycle", "true");
-//      filterRegistration.setEnabled(true);
-//      filterRegistration.addUrlPatterns("/*");// 可以自己灵活的定义很多，避免一些根本不需要被Shiro处理的请求被包含进来
-//      return filterRegistration;
-//  }
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+      FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+      filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
+      //  该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
+      filterRegistration.addInitParameter("targetFilterLifecycle", "true");
+      filterRegistration.setEnabled(true);
+      filterRegistration.addUrlPatterns("/*");// 可以自己灵活的定义很多，避免一些根本不需要被Shiro处理的请求被包含进来
+      return filterRegistration;
+    }
 
     @Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {

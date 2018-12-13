@@ -20,4 +20,6 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    void test1();
+
 }
